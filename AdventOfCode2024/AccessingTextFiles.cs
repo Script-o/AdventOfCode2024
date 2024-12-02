@@ -56,7 +56,7 @@ namespace AdventOfCode2024
             string pattern = @"\d+";
             string sentence = ReadTextFile();
             int totalDifference = 0;
-            Console.WriteLine(sentence);
+            //Console.WriteLine(sentence);
 
             try
             {
@@ -70,38 +70,21 @@ namespace AdventOfCode2024
                     if (groupToggle)
                     {
                         int numberAsInt = UserInputCheck.IntegerCheck(match.Value);
-                        Console.WriteLine("Add Group 1 - " + match.Value);
+                        //Console.WriteLine("Add Group 1 - " + match.Value);
                         NumberGroup1.Add(new NumberCode() { ObjectNumber = numberAsInt });
                         groupToggle = false;
                     }
                     else
                     {
                         int numberAsInt = UserInputCheck.IntegerCheck(match.Value);
-                        Console.WriteLine("Add Group 2 - " + match.Value);
+                        //Console.WriteLine("Add Group 2 - " + match.Value);
                         NumberGroup2.Add(new NumberCode() { ObjectNumber = numberAsInt });
                         groupToggle = true;
                     }
                 NumberGroup1.Sort();
                 NumberGroup2.Sort();
-
-                int loopCounter = 0;
-                foreach (NumberCode currentNumber in NumberGroup1)
-                {
-                    int numberGroup1AsInt = NumberGroup1[loopCounter].ObjectNumber;
-                    int numberGroup2AsInt = NumberGroup2[loopCounter].ObjectNumber;
-                    if (numberGroup1AsInt > numberGroup2AsInt)
-                    {
-                        totalDifference += numberGroup1AsInt - numberGroup2AsInt;
-                    }
-                    else
-                    {
-                        totalDifference += numberGroup2AsInt - numberGroup1AsInt;
-                    }
-
-                    Console.WriteLine("Group 1 - " + numberGroup1AsInt);
-                    Console.WriteLine("Group 2 - " + numberGroup2AsInt);
-                    loopCounter++;
-                }
+                //totalDifference = ColumnComparison.FindDifferenceDistanceBetweenLists(NumberGroup1, NumberGroup2);
+                totalDifference = ColumnComparison.FindMatchesBetweenLists(NumberGroup1, NumberGroup2);
             }
             catch (RegexMatchTimeoutException)
             {
@@ -109,5 +92,7 @@ namespace AdventOfCode2024
             }
             Console.WriteLine(totalDifference);
         }
+
+        
     }
 }
