@@ -6,8 +6,11 @@ namespace AdventOfCode2024
     {
         static void Main(string[] args)
         {
-            AccessingTextFiles.ExtractNumbersFromString();
-            //Example.Test();
+            //string textFileData = AccessingTextFiles.ReadTextFile("Day1Data.txt");
+            //AccessingTextFiles.ExtractNumbersFromStringIntoTwoGroups(textFileData);
+            
+            string textFileData2 = AccessingTextFiles.ReadTextFile("Day2Data.txt");
+            RegularExpressionSorting.ExtractNumbersFromStringMatchingFiveAsendingOrDecnding(textFileData2);
         }
     }
 }

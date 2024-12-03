@@ -55,5 +55,102 @@ namespace AdventOfCode2024
 
             return similarityScore;
         }
+
+        public int GoThroughListToCheckConditions(List<NumberCode> NumberGroup)
+        {
+            int loopCounter = 0;
+            int itemNumberToBeSkipped = 0;
+            bool decending = false;
+            bool ascending = false;
+            bool safeConditions = true;
+            foreach (NumberCode currentNumber in NumberGroup)
+            {
+                if (loopCounter + 1 < NumberGroup.Count)
+                {
+                    if (currentNumber.ObjectNumber > NumberGroup[loopCounter + 1].ObjectNumber)
+                    {
+                        decending = true;
+                    }
+                    if (currentNumber.ObjectNumber < NumberGroup[loopCounter + 1].ObjectNumber)
+                    {
+                        ascending = true;
+                    }
+                    if (decending == ascending)
+                    {
+                        safeConditions = false;
+                        if (itemNumberToBeSkipped == 0) {itemNumberToBeSkipped = loopCounter; }
+                    }
+                    if (currentNumber.ObjectNumber >= NumberGroup[loopCounter + 1].ObjectNumber + 4)
+                    {
+                        safeConditions = false;
+                        if (itemNumberToBeSkipped == 0) { itemNumberToBeSkipped = loopCounter; }
+                    }
+                    if (currentNumber.ObjectNumber <= NumberGroup[loopCounter + 1].ObjectNumber - 4)
+                    {
+                        safeConditions = false;
+                        if (itemNumberToBeSkipped == 0) { itemNumberToBeSkipped = loopCounter; }
+                    }
+                    if (currentNumber.ObjectNumber == NumberGroup[loopCounter + 1].ObjectNumber)
+                    {
+                        safeConditions = false;
+                        if (itemNumberToBeSkipped == 0) { itemNumberToBeSkipped = loopCounter; }
+                    }
+                }
+                loopCounter++;
+            }
+
+            if (safeConditions == false)
+            {
+                loopCounter = 0;
+                decending = false;
+                ascending = false;
+                int skipAmount = 0;
+                safeConditions = true;
+                foreach (NumberCode currentNumber in NumberGroup)
+                {
+                    if (itemNumberToBeSkipped == loopCounter)
+                    {
+                        Console.WriteLine("Skipping: " + currentNumber.ObjectNumber);
+                        skipAmount++;
+                    }
+                    if (loopCounter + skipAmount + 1 < NumberGroup.Count)
+                    {
+                        if (currentNumber.ObjectNumber > NumberGroup[loopCounter + skipAmount + 1].ObjectNumber)
+                        {
+                            decending = true;
+                        }
+                        if (currentNumber.ObjectNumber < NumberGroup[loopCounter + skipAmount + 1].ObjectNumber)
+                        {
+                            ascending = true;
+                        }
+                        if (decending == ascending)
+                        {
+                            safeConditions = false;
+                        }
+                        if (currentNumber.ObjectNumber >= NumberGroup[loopCounter + skipAmount + 1].ObjectNumber + 4)
+                        {
+                            safeConditions = false;
+                        }
+                        if (currentNumber.ObjectNumber <= NumberGroup[loopCounter + skipAmount + 1].ObjectNumber - 4)
+                        {
+                            safeConditions = false;
+                        }
+                        if (currentNumber.ObjectNumber == NumberGroup[loopCounter + skipAmount + 1].ObjectNumber)
+                        {
+                            safeConditions = false;
+                        }
+                    }
+                    loopCounter++;
+                }
+            }
+
+
+            if (safeConditions)
+            {
+                Console.WriteLine($"Safe: {NumberGroup[0].ObjectNumber} {NumberGroup[1].ObjectNumber} {NumberGroup[2].ObjectNumber} {NumberGroup[3].ObjectNumber} {NumberGroup[4].ObjectNumber}");
+                return 1;
+            }
+            return 0;
+        }
     }
 }
